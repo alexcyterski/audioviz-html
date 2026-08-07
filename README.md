@@ -1,18 +1,16 @@
-# Kimi K3 — Audio Visualizer
+# 🎛️ Waveform (Kimi K3)
 
-Pure Web Audio + Canvas visualizer — no frameworks, no dependencies, no audio files. Built with [Kimi K3](https://www.moonshot.cn/) (Moonshot AI).
+**Live site: https://alexcyterski.github.io/audioviz-html/**
 
-- **6 viz modes** — Spectra, Halo, Drift, Ribbon, Bloom, Matrix — each with its own settings (bars/spokes/particles, mirror, trails, wobble…)
-- **6 color palettes** + sensitivity & volume tuning
-- **3 generative demo tracks** (synthwave / lo-fi / techno) synthesized live with a lookahead step-sequencer, plus **live mic input**
-- Mobile-first: gesture controls (tap = play/pause, swipe = switch mode), collapsible glass control sheet; desktop gets a side panel
-- URL params for shareable looks: `?mode=halo&palette=aurora&track=lofi&autoplay=1`
+A benchmark-built audio visualizer: see how far Kimi K3 (Moonshot AI) can take pure Web Audio API + Canvas — no frameworks, no dependencies, no audio files.
+
+**6 modes** (Spectra, Halo, Drift, Ribbon, Bloom, Matrix) with per-mode settings · **6 color palettes** · **3 generative demo tracks** · **Mic input** · Mobile glass control sheet + desktop side panel · Gesture & keyboard controls.
 
 ## Run
 
 ```bash
-python3 -m http.server 8901
-# → http://localhost:8901
+python3 -m http.server 8000
 ```
 
-Keyboard: `space` play/pause · `1–6` modes · `m` mic · `t` next track · `←/→` cycle modes · `f` fullscreen.
+Keyboard: `space` play/pause · `1–6` modes · `m` mic · `t` next track · `←/→` cycle · `f` fullscreen.
+Shareable looks via URL params: `?mode=halo&palette=aurora&track=lofi&autoplay=1`
