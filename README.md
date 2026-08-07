@@ -1,10 +1,8 @@
 # 🎧 Waveform (Qwen 3.7P)
 
-A polished audio visualizer — pure Web Audio API + Canvas.
+A benchmark-built audio visualizer: see how far Qwen 3.7P can take pure Web Audio API + Canvas — no frameworks, no dependencies, no audio files.
 
-**5 modes** (Bars, Wave, Radial, Spectrum, Particles) · **3 demo tracks** · **Mic input** · Custom color pickers, collapsible panel.
-
-Built with [Qwen 3.7P](https://github.com/alexcyterski/waveform-Q3.7P) as a benchmark test.
+**5 modes** (Bars, Wave, Radial, Spectrum, Particles) · **3 generative demo tracks** · **Mic input** · Custom color pickers, collapsible control panel.
 
 ## Run
 
