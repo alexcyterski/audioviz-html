@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0a0a0f">
+    <title>Waveform</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app" id="app">
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 3v18M8 7v10M4 10v4M16 7v10M20 10v4"/></svg>
+                </div>
+                <span>Waveform</span>
+            </div>
+            <div class="header-actions">
+                <button class="icon-btn" id="fullscreen-btn" title="Fullscreen" aria-label="Fullscreen">
+                    <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+                </button>
+            </div>
+        </header>
+
+        <div class="visualizer">
+            <canvas id="canvas"></canvas>
+            <div class="idle-overlay" id="idle-overlay">
+                <p class="idle-text">Choose a source below to start</p>
+                <button class="idle-start-btn" id="idle-start">Quick Start</button>
+            </div>
+            <div class="track-info" id="track-info">
+                <div class="track-title" id="track-title"></div>
+                <div class="track-subtitle" id="track-subtitle"></div>
+            </div>
+        </div>
+
+        <button class="icon-btn fullscreen-exit" id="exit-fullscreen" title="Exit Fullscreen" aria-label="Exit Fullscreen">
+            <svg viewBox="0 0 24 24"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/></svg>
+        </button>
+
+        <div class="panel" id="panel">
+            <div class="panel-handle" id="panel-handle" role="button" aria-label="Toggle controls panel">
+                <div class="panel-handle-bar"></div>
+            </div>
+            <div class="panel-content">
+                <!-- Progress (Hidden for generated tracks, ready for real audio) -->
+                <div class="progress-section" id="progress-section">
+                    <div class="progress-bar-container" id="progress-bar">
+                        <div class="progress-bar-track">
+                            <div class="progress-bar-fill" id="progress-fill">
+                                <div class="progress-bar-thumb"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="time-display">
+                        <span id="time-current">0:00</span>
+                        <span id="time-duration">0:00</span>
+                    </div>
+                </div>
+
+                <!-- Transport -->
+                <div class="transport">
+                    <button class="transport-btn" id="prev-btn" title="Previous" aria-label="Previous track">
+                        <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+                    </button>
+                    <button class="play-btn hidden" id="play-btn" title="Play/Pause" aria-label="Play or Pause">
+                        <svg viewBox="0 0 24 24" id="play-icon"><path d="M8 5v14l11-7z"/></svg>
+                    </button>
+                    <button class="transport-btn" id="next-btn" title="Next" aria-label="Next track">
+                        <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+                    </button>
+                </div>
+
+                <!-- Volume -->
+                <div class="volume-section">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                    <input type="range" class="volume-slider" id="volume-slider" min="0" max="100" value="80" aria-label="Volume">
+                </div>
+
+                <!-- Sources -->
+                <div class="section">
+                    <div class="section-label">Source</div>
+                    <div class="source-pills" id="source-pills">
+                        <button class="source-pill" data-source="0">Synthwave</button>
+                        <button class="source-pill" data-source="1">Electronic</button>
+                        <button class="source-pill" data-source="2">Chill</button>
+                        <button class="source-pill" data-source="mic">Microphone</button>
+                    </div>
+                </div>
+
+                <!-- Visualization -->
+                <div class="section">
+                    <div class="section-label">Visualization</div>
+                    <div class="viz-grid" id="viz-grid">
+                        <button class="viz-option active" data-mode="bars"><span class="viz-option-icon">▮▯▮</span>Bars</button>
+                        <button class="viz-option" data-mode="wave"><span class="viz-option-icon">∿</span>Wave</button>
+                        <button class="viz-option" data-mode="circular"><span class="viz-option-icon">◎</span>Radial</button>
+                        <button class="viz-option" data-mode="particles"><span class="viz-option-icon">⁂</span>Particles</button>
+                        <button class="viz-option" data-mode="mountain"><span class="viz-option-icon">▲</span>Terrain</button>
+                        <button class="viz-option" data-mode="galaxy"><span class="viz-option-icon">✦</span>Galaxy</button>
+                    </div>
+                </div>
+
+                <!-- Theme -->
+                <div class="section">
+                    <div class="section-label">Color Theme</div>
+                    <div class="theme-row" id="theme-row"></div>
+                    <div class="custom-colors">
+                        <label>Custom:</label>
+                        <input type="color" id="custom-color1" value="#6366f1" aria-label="Custom color 1">
+                        <input type="color" id="custom-color2" value="#a855f7" aria-label="Custom color 2">
+                        <input type="color" id="custom-color3" value="#ec4899" aria-label="Custom color 3">
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div class="section">
+                    <div class="section-label">Controls</div>
+                    <div class="controls-scroll">
+                        <div class="control-item">
+                            <label for="bar-width">Bar Width</label>
+                            <input type="range" class="control-slider" id="bar-width" min="1" max="10" value="5" step="1">
+                            <div class="control-value" id="bar-width-value">5</div>
+                        </div>
+                        <div class="control-item">
+                            <label for="smoothness">Smoothness</label>
+                            <input type="range" class="control-slider" id="smoothness" min="0" max="95" value="80" step="5">
+                            <div class="control-value" id="smoothness-value">80%</div>
+                        </div>
+                        <div class="control-item">
+                            <label for="responsiveness">Responsiveness</label>
+                            <input type="range" class="control-slider" id="responsiveness" min="1" max="20" value="10" step="1">
+                            <div class="control-value" id="responsiveness-value">10</div>
+                        </div>
+                        <div class="control-item">
+                            <label for="sensitivity">Sensitivity</label>
+                            <input type="range" class="control-slider" id="sensitivity" min="50" max="200" value="100" step="10">
+                            <div class="control-value" id="sensitivity-value">100%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
