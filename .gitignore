@@ -1,0 +1,6 @@
+node_modules/
+tests/armlibs/
+tests/shots/
+*.png
+*.log
+.DS_Store
