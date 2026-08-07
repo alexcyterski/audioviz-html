@@ -14,6 +14,10 @@ module.exports = {
     baseUrl: process.env.Q37P_URL || 'http://localhost:8080',
     dir: path.resolve(__dirname, '..', 'q3.7p'),
   },
+  kimik3: {
+    baseUrl: process.env.K3_URL || 'http://localhost:8901',
+    dir: path.resolve(__dirname, '..', 'kimi-k3'),
+  },
 
   // ── GitHub Pages (deployed) ──
   dsv4fDeployed: 'https://alexcyterski.github.io/waveform-DSV4F/',
